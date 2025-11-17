@@ -1,0 +1,3 @@
+Hello My Name is sethika
+and this is a demo for the wordcount example
+Signing off sethika

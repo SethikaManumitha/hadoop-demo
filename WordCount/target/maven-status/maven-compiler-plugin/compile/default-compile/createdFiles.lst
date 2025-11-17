@@ -1,0 +1,3 @@
+org\sethika\WC_Mapper.class
+org\sethika\WC_Reducer.class
+org\sethika\WC_Runner.class

@@ -33,10 +33,14 @@ public class WordCount {
         @Override
         public void map(LongWritable key, Text value, OutputCollector<Text, IntWritable> output, Reporter reporter) throws IOException {
             String line = value.toString();
+            String[] columns = line.split(",");
             StringTokenizer tokenizer = new StringTokenizer(line);
-            while(tokenizer.hasMoreTokens()){
-                word.set(tokenizer.nextToken());
-                output.collect(word, one);
+            for(String col: columns){
+                String cleaned = col.trim().replaceAll("^\"|\"$", ""); // Clean quotes
+                if (!cleaned.isEmpty()) {
+                    word.set(cleaned.toLowerCase()); // normalize
+                    output.collect(word, one);
+                }
             }
         }
     }

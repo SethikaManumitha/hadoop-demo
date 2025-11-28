@@ -94,17 +94,20 @@ public class DistrictPerMonth {
         JobConf conf = new JobConf(DistrictPerMonth.class);
         conf.setJobName("DistrictPerMonthWeather");
 
+        // Set output key and value pair
         conf.setOutputKeyClass(Text.class);
         conf.setOutputValueClass(Text.class);
 
+        // Set Mapper and Reducer classes
         conf.setMapperClass(Map.class);
         conf.setReducerClass(Reduce.class);
 
+        // Set Input and Output format class
         conf.setInputFormat(TextInputFormat.class);
         conf.setOutputFormat(TextOutputFormat.class);
         FileInputFormat.setInputPaths(conf, new Path(args[0]));
         FileOutputFormat.setOutputPath(conf, new Path(args[1]));
-        DistributedCache.addCacheFile(new URI("hdfs://namenode:9000/data/processed_location_data.csv#locationData.csv"), conf);
+        DistributedCache.addCacheFile(new URI("hdfs://namenode:9000/data/processed_location_data.csv#locationData.csv"), conf); //  Cache location data in Map side join
 
         JobClient.runJob(conf);
     }

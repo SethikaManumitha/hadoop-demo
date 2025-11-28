@@ -7,6 +7,7 @@ import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapred.*;
 
 import java.io.*;
+import java.net.URI;
 import java.util.HashMap;
 import java.util.Iterator;
 
@@ -25,7 +26,7 @@ public class DistrictPerMonth {
                 Path[] cacheFiles = DistributedCache.getLocalCacheFiles(job);
                 if (cacheFiles != null && cacheFiles.length > 0) {
                     // Process the cached files as needed
-                    BufferedReader reader = new BufferedReader(new FileReader(cacheFiles[0].toString()));
+                    BufferedReader reader = new BufferedReader(new FileReader("locationData.csv"));
                     String line;
                     reader.readLine();
                     while ((line = reader.readLine()) != null) {
@@ -87,7 +88,6 @@ public class DistrictPerMonth {
         }
     }
     public static void main(String[] args) throws Exception {
-        Path location = new Path("/data/processed_location_data.csv");
         JobConf conf = new JobConf(DistrictPerMonth.class);
         conf.setJobName("DistrictPerMonthWeather");
 
@@ -101,7 +101,7 @@ public class DistrictPerMonth {
         conf.setOutputFormat(TextOutputFormat.class);
         FileInputFormat.setInputPaths(conf, new Path(args[0]));
         FileOutputFormat.setOutputPath(conf, new Path(args[1]));
-        DistributedCache.addCacheFile(location.toUri(), conf);
+        DistributedCache.addCacheFile(new URI("hdfs://namenode:9000/data/processed_location_data.csv#locationData.csv"), conf);
 
         JobClient.runJob(conf);
     }

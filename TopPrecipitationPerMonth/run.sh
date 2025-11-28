@@ -12,7 +12,7 @@ mvn clean install
 JAR_PATH="/home/iitgcpuser/hadoop-demo/TopPrecipitationPerMonth/target/TopPrecipitationPerMonth-1.0-SNAPSHOT.jar"
 DOCKER_CONTAINER="namenode"
 HDFS_INPUT="/data/processed_weather_data.csv"
-HDFS_OUTPUT="/user/test/output/MaxPrecipitation"
+HDFS_OUTPUT="/user/test/output/TopTen"
 HADOOP_TARGET_PATH="/opt/hadoop/resources"
 
 echo "Copying JAR to Hadoop container..."

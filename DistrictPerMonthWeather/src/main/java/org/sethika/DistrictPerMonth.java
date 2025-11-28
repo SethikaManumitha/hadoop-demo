@@ -51,21 +51,27 @@ public class DistrictPerMonth {
             }
 
             String[] columns = line.split(",");
-            String locationId = columns[0];
-            String date = columns[1];
-            double temp = Double.parseDouble(columns[5]); // temperature_2m_mean
-            int precipitation = Integer.parseInt(columns[12]); // precipitation_hours
+            try{
+                String locationId = columns[0];
+                String date = columns[1];
+                double temp = Double.parseDouble(columns[5]); // temperature_2m_mean
+                int precipitation = Integer.parseInt(columns[12]); // precipitation_hours
 
-            String city = locationMap.getOrDefault(locationId,"Unknown");
+                String city = locationMap.getOrDefault(locationId,"Unknown");
 
-            String[] dateParts = date.split("-");
-            String year = dateParts[0];
-            String month = dateParts[1];
+                String[] dateParts = date.split("-");
+                String year = dateParts[0];
+                String month = dateParts[1];
 
-            outputKey.set(city + "_" + year + "_" + month);
-            outputValue.set(temp + "," + precipitation);
+                outputKey.set(city + "_" + year + "_" + month);
+                outputValue.set(temp + "," + precipitation);
 
-            output.collect(outputKey, outputValue);
+                output.collect(outputKey, outputValue);
+            }catch(Exception e){
+                System.out.println("Error processing line: " + e.getMessage());
+                throw new RuntimeException(e);
+            }
+
         }
     }
 

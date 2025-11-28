@@ -21,11 +21,14 @@ public class TopPrecipitation {
         @Override
         protected void map(Object key, Text value, Context context) throws IOException, InterruptedException {
             String line = value.toString();
-            if (line.startsWith("location_id") || line.trim().isEmpty()) return;
+            // Skip header
+            if (line.startsWith("location_id")) {
+                return;
+            }
 
             String[] cols = line.split(",");
             try {
-                String date = cols[1]; // "1/2/2010"
+                String date = cols[1];
                 int precipitationHours = Integer.parseInt(cols[12]);
 
                 String[] parts = date.split("-");

@@ -9,10 +9,10 @@ git pull origin main
 echo "Building the project with Maven..."
 mvn clean install
 
-JAR_PATH="/home/iitgcpuser/hadoop-demo/DistrictPerMonthWeather/target/DistrictPerMonthWeather-1.0-SNAPSHOT.jar"
+JAR_PATH="/home/iitgcpuser/hadoop-demo/TopPrecipitationPerMonth/target/TopPrecipitationPerMonth-1.0-SNAPSHOT.jar"
 DOCKER_CONTAINER="namenode"
 HDFS_INPUT="/data/processed_weather_data.csv"
-HDFS_OUTPUT="/user/test/output/DistrictPerMonth"
+HDFS_OUTPUT="/user/test/output/MaxPrecipitation"
 HADOOP_TARGET_PATH="/opt/hadoop/resources"
 
 echo "Copying JAR to Hadoop container..."
@@ -24,8 +24,8 @@ sudo docker exec -it $DOCKER_CONTAINER bash -c "
     hdfs dfs -rm -r -skipTrash $HDFS_OUTPUT || true
 
     echo 'Running MapReduce job...'
-    yarn jar $HADOOP_TARGET_PATH/DistrictPerMonthWeather-1.0-SNAPSHOT.jar org.sethika.DistrictPerMonth $HDFS_INPUT $HDFS_OUTPUT
+    yarn jar $HADOOP_TARGET_PATH/TopPrecipitationPerMonth-1.0-SNAPSHOT.jar org.sethika.TopPrecipitation $HDFS_INPUT $HDFS_OUTPUT
 
-    echo 'Displaying the first 10 lines of output...'
-    hdfs dfs -cat $HDFS_OUTPUT/part-00000 | head
+    echo 'Displaying the result'
+    hdfs dfs -cat $HDFS_OUTPUT/part-00000
 "

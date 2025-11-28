@@ -12,7 +12,7 @@ mvn clean install
 JAR_PATH="/home/iitgcpuser/hadoop-demo/TopPrecipitationPerMonth/target/TopPrecipitationPerMonth-1.0-SNAPSHOT.jar"
 DOCKER_CONTAINER="namenode"
 HDFS_INPUT="/data/processed_weather_data.csv"
-HDFS_OUTPUT="/user/test/output/TopTen"
+HDFS_OUTPUT="/user/test/output/MaxPrecipitation"
 HADOOP_TARGET_PATH="/opt/hadoop/resources"
 
 echo "Copying JAR to Hadoop container..."
@@ -27,5 +27,5 @@ sudo docker exec -it $DOCKER_CONTAINER bash -c "
     yarn jar $HADOOP_TARGET_PATH/TopPrecipitationPerMonth-1.0-SNAPSHOT.jar org.sethika.TopPrecipitation $HDFS_INPUT $HDFS_OUTPUT
 
     echo 'Displaying the result'
-    hdfs dfs -cat $HDFS_OUTPUT/part-00000
+    hdfs dfs -cat $HDFS_OUTPUT/part-r-00000
 "

@@ -84,6 +84,9 @@ public class DistrictPerMonth {
                 count++;
             }
             double avgTemp = totalTemp / count;
+
+            // Round to 2 decimal places
+            avgTemp = Math.round(avgTemp * 100.0) / 100.0;
             output.collect(key, new Text(avgTemp + "," + totalHoursPrecipitation));
         }
     }

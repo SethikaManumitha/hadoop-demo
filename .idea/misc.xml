@@ -6,6 +6,7 @@
       <list>
         <option value="$PROJECT_DIR$/MapReduce/pom.xml" />
         <option value="$PROJECT_DIR$/DistrictPerMonthWeather/pom.xml" />
+        <option value="$PROJECT_DIR$/TopPrecipitationPerMonth/pom.xml" />
       </list>
     </option>
   </component>

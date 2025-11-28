@@ -27,5 +27,5 @@ sudo docker exec -it $DOCKER_CONTAINER bash -c "
     yarn jar $HADOOP_TARGET_PATH/DistrictPerMonthWeather-1.0-SNAPSHOT.jar org.sethika.DistrictPerMonth $HDFS_INPUT $HDFS_OUTPUT
 
     echo 'Displaying the first 10 lines of output...'
-    hdfs dfs -cat $HDFS_OUTPUT/part-00000 | head
+    hdfs dfs -cat $HDFS_OUTPUT/part-r-00000
 "

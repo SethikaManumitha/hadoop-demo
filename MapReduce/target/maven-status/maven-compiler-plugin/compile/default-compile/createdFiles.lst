@@ -1,3 +1,3 @@
-org\sethika\WordCount$Reduce.class
-org\sethika\WordCount.class
-org\sethika\WordCount$Map.class
+org/sethika/WordCount$Map.class
+org/sethika/WordCount.class
+org/sethika/WordCount$Reduce.class

@@ -54,7 +54,7 @@ public class DistrictPerMonth {
             String locationId = columns[0];
             String date = columns[1];
             double temp = Double.parseDouble(columns[5]); // temperature_2m_mean
-            double precipitation = Double.parseDouble(columns[11]); // precipitation_sum
+            int precipitation = Integer.parseInt(columns[12]); // precipitation_hours
 
             String city = locationMap.getOrDefault(locationId,"Unknown");
 
@@ -74,17 +74,17 @@ public class DistrictPerMonth {
         @Override
         public void reduce(Text key, Iterator<Text> values, OutputCollector<Text, Text> output, Reporter reporter) throws IOException {
             double totalTemp = 0.0;
-            double totalPrecipitation = 0.0;
+            int totalHoursPrecipitation = 0;
             int count = 0;
 
             while(values.hasNext()){
                 String[] valueParts = values.next().toString().split(",");
                 totalTemp += Double.parseDouble(valueParts[0]);
-                totalPrecipitation += Double.parseDouble(valueParts[1]);
+                totalHoursPrecipitation += Integer.parseInt(valueParts[1]);
                 count++;
             }
             double avgTemp = totalTemp / count;
-            output.collect(key, new Text(avgTemp + "," + totalPrecipitation));
+            output.collect(key, new Text(avgTemp + "," + totalHoursPrecipitation));
         }
     }
     public static void main(String[] args) throws Exception {

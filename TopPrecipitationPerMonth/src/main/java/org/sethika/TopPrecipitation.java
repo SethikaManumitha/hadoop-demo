@@ -28,9 +28,9 @@ public class TopPrecipitation {
                 String date = cols[1]; // "1/2/2010"
                 int precipitationHours = Integer.parseInt(cols[12]);
 
-                String[] parts = date.split("/"); // MM/DD/YYYY
-                String month = parts[0].length() == 1 ? "0" + parts[0] : parts[0];
-                String year = parts[2];
+                String[] parts = date.split("-");
+                String year = parts[0];
+                String month = parts[1];
                 monthYearKey.set(year + "-" + month);
                 precipitationValue.set(precipitationHours);
                 context.write(monthYearKey, precipitationValue);

@@ -83,9 +83,7 @@ services:
         condition: service_healthy
       namenode:
         condition: service_healthy
-    command: >
-      sh -c "schematool -dbType postgres -initSchema -verbose ||
-             schematool -dbType postgres -upgradeSchema -verbose"
+    command: [ "sh", "-c", "schematool -dbType postgres -initSchema -verbose || schematool -dbType postgres -upgradeSchema -verbose" ]
     networks:
       - hadoop-net
 

@@ -6,8 +6,8 @@ services:
     container_name: namenode
     restart: always
     ports:
-      - "9870:9870" # NameNode Web UI
-      - "9000:9000" # FS Default
+      - "9870:9870"  # NameNode Web UI
+      - "8020:8020"  # NameNode RPC
     volumes:
       - hadoop_namenode:/hadoop/dfs/name
     environment:
@@ -26,7 +26,7 @@ services:
     volumes:
       - hadoop_datanode1:/hadoop/dfs/data
     environment:
-      SERVICE_PRECONDITION: "namenode:9870"
+      SERVICE_PRECONDITION: "namenode:8020"
     env_file:
       - ./hadoop.env
     networks:
@@ -41,7 +41,7 @@ services:
     volumes:
       - hadoop_datanode2:/hadoop/dfs/data
     environment:
-      SERVICE_PRECONDITION: "namenode:9870"
+      SERVICE_PRECONDITION: "namenode:8020"
     env_file:
       - ./hadoop.env
     networks:
@@ -56,9 +56,9 @@ services:
       - datanode1
       - datanode2
     ports:
-      - "8088:8088" # ResourceManager Web UI
+      - "8088:8088" # ResourceManager UI
     environment:
-      SERVICE_PRECONDITION: "namenode:9000 namenode:9870 datanode1:9864 datanode2:9864"
+      SERVICE_PRECONDITION: "namenode:8020 datanode1:9864 datanode2:9864"
     env_file:
       - ./hadoop.env
     networks:
@@ -116,12 +116,12 @@ services:
     volumes:
       - ./config:/opt/hive/conf
     environment:
-      HIVE_CORE_CONF_fs_defaultFS: hdfs://namenode:9000
-      HIVE_JDBC_URL: jdbc:postgresql://postgres:5432/metastore
+      HIVE_CORE_CONF_fs_defaultFS: hdfs://namenode:8020
+      HIVE_JDBC_URL: jdbc:postgresql://hive-postgres:5432/metastore
       HIVE_JDBC_USERNAME: hive
       HIVE_JDBC_PASSWORD: hive
       HIVE_SITE_CONF_hive_metastore_uris: thrift://hive-metastore:9083
-      SERVICE_PRECONDITION: "namenode:9870 datanode1:9864 datanode2:9864 postgres:5432"
+      SERVICE_PRECONDITION: "namenode:8020 datanode1:9864 datanode2:9864 postgres:5432"
     networks:
       - hadoop
 
@@ -135,12 +135,11 @@ services:
     volumes:
       - ./config:/opt/hive/conf
     environment:
-      HIVE_CORE_CONF_fs_defaultFS: hdfs://namenode:9000
+      HIVE_CORE_CONF_fs_defaultFS: hdfs://namenode:8020
       HIVE_SITE_CONF_hive_metastore_uris: thrift://hive-metastore:9083
-      SERVICE_PRECONDITION: "namenode:9870 datanode1:9864 datanode2:9864 hive-metastore:9083"
+      SERVICE_PRECONDITION: "namenode:8020 datanode1:9864 datanode2:9864 hive-metastore:9083"
     networks:
       - hadoop
-
 
 volumes:
   hadoop_namenode:

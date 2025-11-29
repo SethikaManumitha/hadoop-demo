@@ -17,7 +17,7 @@ services:
       - /home/iitgcpuser/iit/lab5/hadoop-hive-dockercompose/recharge2.input:/opt/recharge2.input
       - ./data_new/namenode:/hadoop/dfs/name
     ports:
-      - "50070:50070"
+      - "9870:9870"
       - "8020:8020"
     networks:
       - hadoop-net

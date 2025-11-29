@@ -17,7 +17,7 @@ services:
       - /home/iitgcpuser/iit/lab5/hadoop-hive-dockercompose/recharge2.input:/opt/recharge2.input
       - ./data_new/namenode:/hadoop/dfs/name
     ports:
-      - "9870:9870"
+      - "50070:50070"
       - "8020:8020"
     networks:
       - hadoop-net
@@ -83,7 +83,7 @@ services:
         condition: service_healthy
       namenode:
         condition: service_healthy
-    command: [ "sh", "-c", "schematool -dbType postgres -initSchema -verbose || schematool -dbType postgres -upgradeSchema -verbose" ]
+    command: [ "schematool", "-dbType", "postgres", "-initSchema", "-verbose" ]
     networks:
       - hadoop-net
 

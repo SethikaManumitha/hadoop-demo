@@ -106,6 +106,7 @@ services:
   hive-metastore:
     image: bde2020/hive:2.3.2-postgresql-metastore
     container_name: hive-metastore
+    hostname: hive-metastore  # Add this line
     depends_on:
       - namenode
       - datanode1
@@ -122,22 +123,27 @@ services:
       HIVE_JDBC_PASSWORD: hive
       HIVE_SITE_CONF_hive_metastore_uris: thrift://hive-metastore:9083
       SERVICE_PRECONDITION: "namenode:8020 datanode1:9864 datanode2:9864 postgres:5432"
+    env_file:
+      - ./hadoop.env  # Add this line to use hadoop.env settings
     networks:
       - hadoop
 
   hive-server:
     image: bde2020/hive:2.3.2-postgresql-metastore
     container_name: hive-server
+    hostname: hive-server  # Add this line
     depends_on:
       - hive-metastore
     ports:
-      - "10000:10000"  # HiveServer2
+      - "10000:10000"
     volumes:
       - ./config:/opt/hive/conf
     environment:
       HIVE_CORE_CONF_fs_defaultFS: hdfs://namenode:8020
       HIVE_SITE_CONF_hive_metastore_uris: thrift://hive-metastore:9083
       SERVICE_PRECONDITION: "namenode:8020 datanode1:9864 datanode2:9864 hive-metastore:9083"
+    env_file:
+      - ./hadoop.env  # Add this line to use hadoop.env settings
     networks:
       - hadoop
 

@@ -11,7 +11,7 @@ mvn clean install
 
 JAR_PATH="/home/iitgcpuser/hadoop-demo/MapReduce/target/MapReduce-1.0-SNAPSHOT.jar"
 DOCKER_CONTAINER="namenode"
-HDFS_INPUT="/data/processed_weather_data.csv"
+HDFS_INPUT="/user/data/weather/processed_weather_data.csv"
 HDFS_OUTPUT="/user/test/output/MapReduce/TopPrecipitation"
 HADOOP_TARGET_PATH="/opt/hadoop/resources"
 

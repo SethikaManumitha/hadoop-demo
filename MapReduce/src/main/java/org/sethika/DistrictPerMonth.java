@@ -108,7 +108,7 @@ public class DistrictPerMonth {
         FileInputFormat.addInputPath(job, new Path(args[0]));
         FileOutputFormat.setOutputPath(job, new Path(args[1]));
 
-        job.addCacheFile(new URI("hdfs://namenode:8020/data/processed_location_data.csv#locationData.csv"));
+        job.addCacheFile(new URI("hdfs://namenode:8020/user/data/location/processed_location_data.csv#locationData.csv"));
 
         System.exit(job.waitForCompletion(true) ? 0 : 1);
     }

@@ -1,4 +1,4 @@
 #!/bin/bash
-docker compose down
-docker volume rm hadoop-setup_metastore-db2
-docker compose up -d
+sudo docker compose down
+sudo docker volume rm hadoop-setup_metastore-db2
+sudo docker compose up -d

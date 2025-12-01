@@ -27,4 +27,4 @@ CAPACITY-SCHEDULER.XML_yarn.scheduler.capacity.node-locality-delay=40
 CAPACITY-SCHEDULER.XML_yarn.scheduler.capacity.queue-mappings=
 CAPACITY-SCHEDULER.XML_yarn.scheduler.capacity.queue-mappings-override.enable=false
 HIVE_METASTORE_URI=thrift://hive-metastore:9083
-CORE-SITE.XML_fs.defaultFS=hdfs://namenode:9000
+CORE-SITE.XML_fs.defaultFS=hdfs://namenode:8020

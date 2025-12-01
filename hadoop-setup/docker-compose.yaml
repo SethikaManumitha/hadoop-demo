@@ -134,6 +134,39 @@ services:
     networks:
       - hadoop-net
 
+  # -----------------------------
+  # Spark Master
+  # -----------------------------
+  spark-master:
+    image: bitnami/spark:3.3.2
+    container_name: spark-master
+    environment:
+      - SPARK_MODE=master
+      - SPARK_MASTER_PORT=7077
+      - SPARK_MASTER_WEBUI_PORT=8080
+    ports:
+      - "7077:7077"
+      - "8080:8080"
+    networks:
+      - hadoop-net
+
+  # -----------------------------
+  # Spark Worker
+  # -----------------------------
+  spark-worker:
+    image: bitnami/spark:3.3.2
+    container_name: spark-worker
+    environment:
+      - SPARK_MODE=worker
+      - SPARK_MASTER_URL=spark://spark-master:7077
+      - SPARK_WORKER_WEBUI_PORT=8081
+    ports:
+      - "8081:8081"
+    depends_on:
+      - spark-master
+    networks:
+      - hadoop-net
+
 networks:
   hadoop-net:
     driver: bridge

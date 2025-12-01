@@ -16,6 +16,8 @@ services:
     volumes:
       - /home/iitgcpuser/iit/lab5/hadoop-hive-dockercompose/recharge2.input:/opt/recharge2.input
       - ./data_new/namenode:/hadoop/dfs/name
+      - /home/iitgcpuser/hadoop-demo/hadoop-setup/hadoop_dir:/opt/hadoop/etc/hadoop
+
     ports:
       - "9870:9870"
       - "8020:8020"
@@ -162,6 +164,23 @@ services:
       - "8081:8081"
     environment:
       - "SPARK_MASTER=spark://spark-master:7077"
+      - CORE_CONF_fs_defaultFS=hdfs://namenode:8020
+    networks:
+      - hadoop-net
+
+  zepplin:
+    image: apache/zeppelin:0.9.0
+    container_name: zeppelin
+    platform: linux/amd64
+    volumes:
+      - /home/iitgcpuser/hadoop-demo/hadoop-setup/resources:/opt/resources
+    depends_on:
+      - spark-master
+    ports:
+      - "8082:8080"
+    environment:
+      - SPARK_MASTER=spark://spark-master:7077
+      - HADOOP_CONF_DIR=/opt/hadoop/etc/hadoop
       - CORE_CONF_fs_defaultFS=hdfs://namenode:8020
     networks:
       - hadoop-net

@@ -168,25 +168,15 @@ services:
     networks:
       - hadoop-net
 
-  zepplin:
-    image: apache/zeppelin:0.9.0-spark-2.4.8
+  zeppelin:
+    image: apache/zeppelin:0.9.0
     container_name: zeppelin
+    platform: linux/amd64
+    restart: always
     ports:
-      - "8089:8080"
-    environment:
-      - SPARK_MASTER=spark://spark-master:7077
-      - HADOOP_CONF_DIR=/opt/hadoop/etc/hadoop
-      - CORE_CONF_fs_defaultFS=hdfs://namenode:8020
-    volumes:
-      - /home/iitgcpuser/hadoop-demo/hadoop-setup/hadoop_dir:/opt/hadoop/etc/hadoop
-    depends_on:
-      - spark-master
-      - namenode
-      - datanode
+      - 8089:8080
     networks:
       - hadoop-net
-
-
 
 volumes:
   metastore-db2:

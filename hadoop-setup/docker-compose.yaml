@@ -149,6 +149,8 @@ services:
     environment:
       - INIT_DAEMON_STEP=setup_spark
       - CORE_CONF_fs_defaultFS=hdfs://namenode:8020
+    networks:
+      - hadoop-net
 
   spark-worker-1:
     image: ramilu90/spark-worker
@@ -161,6 +163,8 @@ services:
     environment:
       - "SPARK_MASTER=spark://spark-master:7077"
       - CORE_CONF_fs_defaultFS=hdfs://namenode:8020
+    networks:
+      - hadoop-net
 
 volumes:
   metastore-db2:

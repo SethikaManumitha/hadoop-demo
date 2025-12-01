@@ -134,44 +134,6 @@ services:
     networks:
       - hadoop-net
 
-  spark-master:
-    image: bitnami/spark:3.5
-    container_name: spark-master
-    environment:
-      - SPARK_MODE=master
-      - SPARK_MASTER_HOST=spark-master
-      - SPARK_LOG_LEVEL=WARN
-      # Optional: point to HDFS
-      - HADOOP_CONF_DIR=/opt/hadoop/etc/hadoop
-    ports:
-      - "7077:7077"     # Spark master port
-      - "8080:8080"     # Spark master UI
-    depends_on:
-      namenode:
-        condition: service_healthy
-    networks:
-      - hadoop-net
-
-  spark-worker:
-    image: bitnami/spark:3.5
-    container_name: spark-worker
-    environment:
-      - SPARK_MODE=worker
-      - SPARK_MASTER_URL=spark://spark-master:7077
-      - SPARK_WORKER_MEMORY=2G
-      - SPARK_WORKER_CORES=2
-      - SPARK_LOG_LEVEL=WARN
-      - HADOOP_CONF_DIR=/opt/hadoop/etc/hadoop
-    depends_on:
-      spark-master:
-        condition: service_started
-      namenode:
-        condition: service_healthy
-    networks:
-      - hadoop-net
-volumes:
-  metastore-db2:
-
 networks:
   hadoop-net:
     driver: bridge

@@ -134,11 +134,9 @@ services:
     networks:
       - hadoop-net
 
-  # -----------------------------
-  # Spark Master
-  # -----------------------------
+  services:
   spark-master:
-    image: bitnami/spark:3.3.2
+    image: apache/spark:3.3.2
     container_name: spark-master
     environment:
       - SPARK_MODE=master
@@ -150,11 +148,8 @@ services:
     networks:
       - hadoop-net
 
-  # -----------------------------
-  # Spark Worker
-  # -----------------------------
   spark-worker:
-    image: bitnami/spark:3.3.2
+    image: apache/spark:3.3.2
     container_name: spark-worker
     environment:
       - SPARK_MODE=worker

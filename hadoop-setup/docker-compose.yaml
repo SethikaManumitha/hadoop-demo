@@ -174,9 +174,14 @@ services:
     platform: linux/amd64
     volumes:
       - /home/iitgcpuser/hadoop-demo/hadoop-setup/resources:/opt/resources
-      - /home/iitgcpuser/hadoop-demo/hadoop-setup/hadoop_dir:/opt/hadoop/etc/hadoop   # <- add this
+      - /home/iitgcpuser/hadoop-demo/hadoop-setup/hadoop_dir:/opt/hadoop/etc/hadoop
     depends_on:
-      - spark-master
+      namenode:
+        condition: service_healthy
+      datanode:
+        condition: service_healthy
+      spark-master:
+        condition: service_healthy
     ports:
       - "8089:8080"
     environment:
@@ -185,6 +190,7 @@ services:
       - CORE_CONF_fs_defaultFS=hdfs://namenode:8020
     networks:
       - hadoop-net
+
 
 
 volumes:

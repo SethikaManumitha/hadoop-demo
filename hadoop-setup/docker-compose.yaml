@@ -177,6 +177,8 @@ services:
       - 8089:8080
     networks:
       - hadoop-net
+    volumes:
+      - ./zeppelin-notebooks:/zeppelin/notebook
 
 volumes:
   metastore-db2:

@@ -167,6 +167,9 @@ services:
     networks:
       - hadoop-net
 
+volumes:
+  metastore-db2:
+
 networks:
   hadoop-net:
     driver: bridge

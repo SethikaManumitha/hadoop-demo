@@ -134,7 +134,6 @@ services:
     networks:
       - hadoop-net
 
-  services:
   spark-master:
     image: apache/spark:3.3.2
     container_name: spark-master

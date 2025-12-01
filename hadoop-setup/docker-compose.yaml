@@ -135,31 +135,32 @@ services:
       - hadoop-net
 
   spark-master:
-    image: gcr.io/spark-operator/spark-py:v3.3.2
+    image: ramilu90/spark-master
     container_name: spark-master
-    environment:
-      - SPARK_MODE=master
-      - SPARK_MASTER_PORT=7077
-      - SPARK_MASTER_WEBUI_PORT=8080
+    platform: linux/amd64
+    volumes:
+      - /home/iitgcpuser/iit/lab7/hadoop-spark-dockercompose/resources/:/opt/resources
+    depends_on:
+      - namenode
+      - datanode
     ports:
-      - "7077:7077"
       - "8080:8080"
-    networks:
-      - hadoop-net
-
-  spark-worker:
-    image: gcr.io/spark-operator/spark-py:v3.3.2
-    container_name: spark-worker
+      - "7077:7077"
     environment:
-      - SPARK_MODE=worker
-      - SPARK_MASTER_URL=spark://spark-master:7077
-      - SPARK_WORKER_WEBUI_PORT=8081
-    ports:
-      - "8081:8081"
+      - INIT_DAEMON_STEP=setup_spark
+      - CORE_CONF_fs_defaultFS=hdfs://namenode:9000
+
+  spark-worker-1:
+    image: ramilu90/spark-worker
+    container_name: spark-worker-1
+    platform: linux/amd64
     depends_on:
       - spark-master
-    networks:
-      - hadoop-net
+    ports:
+      - "8081:8081"
+    environment:
+      - "SPARK_MASTER=spark://spark-master:7077"
+      - CORE_CONF_fs_defaultFS=hdfs://namenode:9000
 
 volumes:
   metastore-db2:

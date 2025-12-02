@@ -1,0 +1,431 @@
+﻿{
+  "paragraphs": [
+    {
+      "user": "anonymous",
+      "progress": 0,
+      "config": {
+        "editorSetting": {
+          "language": "python",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "colWidth": 12,
+        "editorMode": "ace/mode/python",
+        "fontSize": 9,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "apps": [],
+      "runtimeInfos": {
+        "jobUrl": {
+          "propertyName": "jobUrl",
+          "label": "SPARK JOB",
+          "tooltip": "View in Spark web UI",
+          "group": "spark",
+          "values": [
+            {
+              "jobUrl": "http://1b126c741b0b:4040/jobs/job?id=0",
+              "$$hashKey": "object:556"
+            },
+            {
+              "jobUrl": "http://1b126c741b0b:4040/jobs/job?id=1",
+              "$$hashKey": "object:557"
+            },
+            {
+              "jobUrl": "http://1b126c741b0b:4040/jobs/job?id=2",
+              "$$hashKey": "object:558"
+            },
+            {
+              "jobUrl": "http://1b126c741b0b:4040/jobs/job?id=3",
+              "$$hashKey": "object:559"
+            }
+          ],
+          "interpreterSettingId": "spark"
+        }
+      },
+      "progressUpdateIntervalMs": 500,
+      "jobName": "paragraph_1764654392467_1862728647",
+      "id": "paragraph_1764654392467_1862728647",
+      "dateCreated": "2025-12-02T05:46:32+0000",
+      "status": "FINISHED",
+      "focus": true,
+      "$$hashKey": "object:358",
+      "text": "%spark.pyspark\r\n\r\nfrom pyspark.sql.functions import *\r\nfrom pyspark.sql import SparkSession\r\n\r\nspark = SparkSession.builder.appName(\"Task2Spark\").getOrCreate()\r\n\r\nlocations = spark.read.csv(\"hdfs://namenode:8020/user/data/location/processed_location_data.csv\", header=True, inferSchema=True)\r\nweather = spark.read.csv(\"hdfs://namenode:8020/user/data/weather/processed_weather_data.csv\", header=True, inferSchema=True)\r\n\r\nweather = weather.withColumn(\"date\", to_date(col(\"date\")))\r\n",
+      "dateUpdated": "2025-12-02T05:47:17+0000",
+      "dateFinished": "2025-12-02T05:47:41+0000",
+      "dateStarted": "2025-12-02T05:47:17+0000",
+      "results": {
+        "code": "SUCCESS",
+        "msg": []
+      }
+    },
+    {
+      "text": "%spark.pyspark\r\n\r\n# Add month column\r\nweather_month = weather.withColumn(\"month\", month(col(\"date\")))\r\n\r\nweather_month.show(2)\r\n",
+      "user": "anonymous",
+      "dateUpdated": "2025-12-02T05:51:15+0000",
+      "progress": 0,
+      "config": {
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "colWidth": 12,
+        "editorMode": "ace/mode/scala",
+        "fontSize": 9,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "apps": [],
+      "runtimeInfos": {
+        "jobUrl": {
+          "propertyName": "jobUrl",
+          "label": "SPARK JOB",
+          "tooltip": "View in Spark web UI",
+          "group": "spark",
+          "values": [
+            {
+              "jobUrl": "http://1b126c741b0b:4040/jobs/job?id=13",
+              "$$hashKey": "object:1040"
+            }
+          ],
+          "interpreterSettingId": "spark"
+        }
+      },
+      "progressUpdateIntervalMs": 500,
+      "jobName": "paragraph_1764654437337_1712069938",
+      "id": "paragraph_1764654437337_1712069938",
+      "dateCreated": "2025-12-02T05:47:17+0000",
+      "status": "FINISHED",
+      "focus": true,
+      "$$hashKey": "object:426",
+      "dateFinished": "2025-12-02T05:51:15+0000",
+      "dateStarted": "2025-12-02T05:51:15+0000",
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "+-----------+----------+------------+------------------+------------------+-------------------+------------------------+------------------------+-------------------------+-----------------+-----------------+-----------------+-------------------+------------------+------------------+---------------------------+-----------------------+--------------------------+-------+------+-----+\n|location_id|      date|weather_code|temperature_2m_max|temperature_2m_min|temperature_2m_mean|apparent_temperature_max|apparent_temperature_min|apparent_temperature_mean|daylight_duration|sunshine_duration|precipitation_sum|precipitation_hours|wind_speed_10m_max|wind_gusts_10m_max|wind_direction_10m_dominant|shortwave_radiation_sum|et0_fao_evapotranspiration|sunrise|sunset|month|\n+-----------+----------+------------+------------------+------------------+-------------------+------------------------+------------------------+-------------------------+-----------------+-----------------+-----------------+-------------------+------------------+------------------+---------------------------+-----------------------+--------------------------+-------+------+-----+\n|          0|2010-01-01|           1|              30.1|              22.6|               26.0|                    34.5|                    25.0|                     29.0|          42220.2|         38905.73|              0.0|                  0|              12.2|              27.4|                         19|                  20.92|                      4.61|  06:22| 18:05|    1|\n|          0|2010-01-02|          51|              30.1|              23.7|               26.3|                    33.9|                    26.1|                     29.7|         42225.71|         37451.01|              0.1|                  1|              13.0|              27.0|                         24|                  17.71|                      3.91|  06:22| 18:06|    1|\n+-----------+----------+------------+------------------+------------------+-------------------+------------------------+------------------------+-------------------------+-----------------+-----------------+-----------------+-------------------+------------------+------------------+---------------------------+-----------------------+--------------------------+-------+------+-----+\nonly showing top 2 rows\n\n"
+          }
+        ]
+      }
+    },
+    {
+      "text": "%spark.pyspark\n# Total rows per month\nmonthly_total = weather_month.groupBy(\"month\").agg(count(\"*\").alias(\"total_count\"))\n\n# Rows above 15 \nmonthly_above = weather_month.filter(col(\"shortwave_radiation_sum\") > 15).groupBy(\"month\").agg(count(\"*\").alias(\"above_15_count\"))\nradiation_percentage = monthly_total.join(monthly_above, \"month\", \"left\") .withColumn(\"percentage_above_15\",(col(\"above_15_count\") / col(\"total_count\")) * 100).orderBy(\"month\")\nradiation_percentage.show() # Show percentage of radiation above 15",
+      "user": "anonymous",
+      "dateUpdated": "2025-12-02T05:52:19+0000",
+      "progress": 0,
+      "config": {
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "colWidth": 12,
+        "editorMode": "ace/mode/scala",
+        "fontSize": 9,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "apps": [],
+      "runtimeInfos": {
+        "jobUrl": {
+          "propertyName": "jobUrl",
+          "label": "SPARK JOB",
+          "tooltip": "View in Spark web UI",
+          "group": "spark",
+          "values": [
+            {
+              "jobUrl": "http://1b126c741b0b:4040/jobs/job?id=10",
+              "$$hashKey": "object:1045"
+            },
+            {
+              "jobUrl": "http://1b126c741b0b:4040/jobs/job?id=11",
+              "$$hashKey": "object:1046"
+            }
+          ],
+          "interpreterSettingId": "spark"
+        }
+      },
+      "progressUpdateIntervalMs": 500,
+      "jobName": "paragraph_1764654475395_1929610639",
+      "id": "paragraph_1764654475395_1929610639",
+      "dateCreated": "2025-12-02T05:47:55+0000",
+      "status": "FINISHED",
+      "focus": true,
+      "$$hashKey": "object:577",
+      "dateFinished": "2025-12-02T05:50:12+0000",
+      "dateStarted": "2025-12-02T05:50:11+0000",
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "+-----+-----------+--------------+-------------------+\n|month|total_count|above_15_count|percentage_above_15|\n+-----+-----------+--------------+-------------------+\n|    1|      12555|          9900|  78.85304659498208|\n|    2|      11448|         10276|  89.76240391334731|\n|    3|      12555|         12084|   96.2485065710872|\n|    4|      12150|         11611|  95.56378600823045|\n|    5|      12555|         10672|  85.00199123855037|\n|    6|      11556|         10217|  88.41294565593631|\n|    7|      11718|         10470|  89.34971838197644|\n|    8|      11718|         10369|  88.48779655231269|\n|    9|      11340|          9743|  85.91710758377425|\n|   10|      11718|          8918|  76.10513739545998|\n|   11|      11340|          6954|  61.32275132275132|\n|   12|      11718|          6946|   59.2763270182625|\n+-----+-----------+--------------+-------------------+\n\n"
+          }
+        ]
+      }
+    },
+    {
+      "text": "%spark.pyspark\nweather2 = weather.withColumn(\"year\", year(col(\"date\"))).withColumn(\"month\", month(col(\"date\"))).withColumn(\"week\", weekofyear(col(\"date\")))\n\n# compute average temperature per month per year\nmonthly_avg = weather2.groupBy(\"year\", \"month\").agg(avg(\"temperature_2m_mean\").alias(\"avg_temp\"))\nmonthly_avg.show(10)",
+      "user": "anonymous",
+      "dateUpdated": "2025-12-02T05:56:51+0000",
+      "progress": 0,
+      "config": {
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "colWidth": 12,
+        "editorMode": "ace/mode/scala",
+        "fontSize": 9,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "apps": [],
+      "runtimeInfos": {
+        "jobUrl": {
+          "propertyName": "jobUrl",
+          "label": "SPARK JOB",
+          "tooltip": "View in Spark web UI",
+          "group": "spark",
+          "values": [
+            {
+              "jobUrl": "http://1b126c741b0b:4040/jobs/job?id=36",
+              "$$hashKey": "object:1949"
+            },
+            {
+              "jobUrl": "http://1b126c741b0b:4040/jobs/job?id=37",
+              "$$hashKey": "object:1950"
+            },
+            {
+              "jobUrl": "http://1b126c741b0b:4040/jobs/job?id=38",
+              "$$hashKey": "object:1951"
+            }
+          ],
+          "interpreterSettingId": "spark"
+        }
+      },
+      "progressUpdateIntervalMs": 500,
+      "jobName": "paragraph_1764654611292_346581741",
+      "id": "paragraph_1764654611292_346581741",
+      "dateCreated": "2025-12-02T05:50:11+0000",
+      "status": "FINISHED",
+      "focus": true,
+      "$$hashKey": "object:847",
+      "dateFinished": "2025-12-02T05:56:52+0000",
+      "dateStarted": "2025-12-02T05:56:51+0000",
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "+----+-----+------------------+\n|year|month|          avg_temp|\n+----+-----+------------------+\n|2022|   10|24.891636798088413|\n|2012|   10|25.311230585424138|\n|2010|    7|26.288530465949826|\n|2010|   12| 23.63237753882916|\n|2015|    2|24.457010582010593|\n|2019|   10|24.684707287933094|\n|2017|    3|25.586977299880523|\n|2017|    8|26.511350059737158|\n|2014|    4|26.745802469135793|\n|2020|    6| 27.07012345679013|\n+----+-----+------------------+\nonly showing top 10 rows\n\n"
+          }
+        ]
+      }
+    },
+    {
+      "text": "%spark.pyspark\nfrom pyspark.sql.window import Window\nw = Window.partitionBy(\"year\").orderBy(col(\"avg_temp\").desc())\n\nhottest_months = monthly_avg.withColumn(\"rank\", rank().over(w)).filter(col(\"rank\") == 1).select(\"year\", \"month\")\n    \nhottest_months.show()",
+      "user": "anonymous",
+      "dateUpdated": "2025-12-02T06:05:01+0000",
+      "progress": 0,
+      "config": {
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "colWidth": 12,
+        "editorMode": "ace/mode/scala",
+        "fontSize": 9,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "apps": [],
+      "runtimeInfos": {
+        "jobUrl": {
+          "propertyName": "jobUrl",
+          "label": "SPARK JOB",
+          "tooltip": "View in Spark web UI",
+          "group": "spark",
+          "values": [
+            {
+              "jobUrl": "http://1b126c741b0b:4040/jobs/job?id=52",
+              "$$hashKey": "object:2574"
+            },
+            {
+              "jobUrl": "http://1b126c741b0b:4040/jobs/job?id=53",
+              "$$hashKey": "object:2575"
+            },
+            {
+              "jobUrl": "http://1b126c741b0b:4040/jobs/job?id=54",
+              "$$hashKey": "object:2576"
+            },
+            {
+              "jobUrl": "http://1b126c741b0b:4040/jobs/job?id=55",
+              "$$hashKey": "object:2577"
+            },
+            {
+              "jobUrl": "http://1b126c741b0b:4040/jobs/job?id=56",
+              "$$hashKey": "object:2578"
+            }
+          ],
+          "interpreterSettingId": "spark"
+        }
+      },
+      "progressUpdateIntervalMs": 500,
+      "jobName": "paragraph_1764654884127_447730117",
+      "id": "paragraph_1764654884127_447730117",
+      "dateCreated": "2025-12-02T05:54:44+0000",
+      "status": "FINISHED",
+      "focus": true,
+      "$$hashKey": "object:1055",
+      "dateFinished": "2025-12-02T06:05:03+0000",
+      "dateStarted": "2025-12-02T06:05:01+0000",
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "+----+-----+\n|year|month|\n+----+-----+\n|2018|    7|\n|2015|    7|\n|2023|    8|\n|2022|    5|\n|2013|    4|\n|2014|    6|\n|2019|    6|\n|2020|    5|\n|2012|    5|\n|2016|    4|\n|2024|    4|\n|2010|    4|\n|2011|    6|\n|2017|    4|\n|2021|    7|\n+----+-----+\n\n"
+          }
+        ]
+      }
+    },
+    {
+      "text": "%spark.pyspark\nfiltered_weather = weather2.join(hottest_months, [\"year\", \"month\"])\nweekly_max_temp = filtered_weather.groupBy(\"year\", \"month\", \"week\").agg(max(\"temperature_2m_max\").alias(\"weekly_max_temp\")).orderBy(\"year\", \"week\")\nweekly_max_temp.show()\n",
+      "user": "anonymous",
+      "dateUpdated": "2025-12-02T06:07:03+0000",
+      "progress": 0,
+      "config": {
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "colWidth": 12,
+        "editorMode": "ace/mode/scala",
+        "fontSize": 9,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "apps": [],
+      "runtimeInfos": {
+        "jobUrl": {
+          "propertyName": "jobUrl",
+          "label": "SPARK JOB",
+          "tooltip": "View in Spark web UI",
+          "group": "spark",
+          "values": [
+            {
+              "jobUrl": "http://1b126c741b0b:4040/jobs/job?id=61",
+              "$$hashKey": "object:2851"
+            },
+            {
+              "jobUrl": "http://1b126c741b0b:4040/jobs/job?id=62",
+              "$$hashKey": "object:2852"
+            }
+          ],
+          "interpreterSettingId": "spark"
+        }
+      },
+      "progressUpdateIntervalMs": 500,
+      "jobName": "paragraph_1764654967726_834340708",
+      "id": "paragraph_1764654967726_834340708",
+      "dateCreated": "2025-12-02T05:56:07+0000",
+      "status": "FINISHED",
+      "focus": true,
+      "$$hashKey": "object:1638",
+      "dateFinished": "2025-12-02T06:07:04+0000",
+      "dateStarted": "2025-12-02T06:07:03+0000",
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "+----+-----+----+---------------+\n|year|month|week|weekly_max_temp|\n+----+-----+----+---------------+\n|2010|    4|  13|           36.1|\n|2010|    4|  14|           35.8|\n|2010|    4|  15|           36.3|\n|2010|    4|  16|           35.3|\n|2010|    4|  17|           33.3|\n|2011|    6|  22|           35.1|\n|2011|    6|  23|           35.2|\n|2011|    6|  24|           35.5|\n|2011|    6|  25|           36.4|\n|2011|    6|  26|           37.0|\n|2012|    5|  18|           35.4|\n|2012|    5|  19|           37.1|\n|2012|    5|  20|           37.4|\n|2012|    5|  21|           36.2|\n|2012|    5|  22|           36.4|\n|2013|    4|  14|           36.5|\n|2013|    4|  15|           36.0|\n|2013|    4|  16|           36.2|\n|2013|    4|  17|           34.8|\n|2013|    4|  18|           34.8|\n+----+-----+----+---------------+\nonly showing top 20 rows\n\n"
+          }
+        ]
+      }
+    },
+    {
+      "text": "%spark.pyspark\n",
+      "user": "anonymous",
+      "dateUpdated": "2025-12-02T06:05:33+0000",
+      "progress": 0,
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "apps": [],
+      "runtimeInfos": {},
+      "progressUpdateIntervalMs": 500,
+      "jobName": "paragraph_1764655533050_1065714882",
+      "id": "paragraph_1764655533050_1065714882",
+      "dateCreated": "2025-12-02T06:05:33+0000",
+      "status": "READY",
+      "focus": true,
+      "$$hashKey": "object:2599"
+    }
+  ],
+  "name": "spark_task",
+  "id": "2MBMVZJNZ",
+  "defaultInterpreterGroup": "spark",
+  "version": "0.9.0",
+  "noteParams": {},
+  "noteForms": {},
+  "angularObjects": {},
+  "config": {
+    "isZeppelinNotebookCronEnable": false,
+    "looknfeel": "default",
+    "personalizedMode": "false"
+  },
+  "info": {},
+  "path": "/spark_task"
+}

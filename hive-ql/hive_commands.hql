@@ -50,11 +50,11 @@ LOCATION '/user/data/weather/'
 TBLPROPERTIES ("skip.header.line.count"="1");
 
 -- Query to find the top 10 cities with the highest average temperature
-SELECT l.city_name, ROUND(AVG(w.temperature_2m_mean),2) AS avg_temp
+SELECT l.city_name, MAX(w.temperature_2m_max) AS max_temp
 FROM weather w
 JOIN location l ON w.location_id = l.location_id
 GROUP BY l.city_name
-ORDER BY avg_temp DESC
+ORDER BY max_temp DESC
 LIMIT 10;
 
 -- First I created a view to extract month and year from the date to make it easier to work with

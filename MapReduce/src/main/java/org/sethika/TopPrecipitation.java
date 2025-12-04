@@ -26,6 +26,7 @@ public class TopPrecipitation {
                 return;
             }
 
+            // Break the line into columns
             String[] cols = line.split(",");
             try {
                 String date = cols[1];
@@ -34,6 +35,8 @@ public class TopPrecipitation {
                 String[] parts = date.split("-");
                 String year = parts[0];
                 String month = parts[1];
+
+                // Create month-year key
                 monthYearKey.set(year + "-" + month);
                 precipitationValue.set(precipitationHours);
                 context.write(monthYearKey, precipitationValue);

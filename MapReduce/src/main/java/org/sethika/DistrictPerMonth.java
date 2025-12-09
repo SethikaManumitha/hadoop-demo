@@ -59,10 +59,9 @@ public class DistrictPerMonth {
                 String city = locationMap.getOrDefault(locationId, "Unknown");
 
                 String[] dateParts = date.split("-");
-                String year = dateParts[0];
                 String month = dateParts[1];
 
-                outputKey.set(city + "_" + year + "_" + month);
+                outputKey.set(city + "_" + month);
                 outputValue.set(temp + "," + precipitation);
 
                 context.write(outputKey, outputValue);

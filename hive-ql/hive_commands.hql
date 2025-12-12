@@ -50,7 +50,7 @@ LOCATION '/user/data/weather/'
 TBLPROPERTIES ("skip.header.line.count"="1");
 
 -- Query to find the top 10 cities with the highest temperature
-SELECT l.city_name, MAX(w.temperature_2m_max) AS max_temp
+SELECT l.city_name, SUM(w.temperature_2m_max) AS max_temp
 FROM weather w
 JOIN location l ON w.location_id = l.location_id
 GROUP BY l.city_name
